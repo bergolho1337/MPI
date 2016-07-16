@@ -1,0 +1,20 @@
+// Checar versão do MPI
+mpicc --version
+mpiexec --version
+
+// Manual do MPI
+man mpicc 
+man mpiexec
+
+// Se usar MPICH2 só compilar e rodar com as bibliotecas do MPICH2, senão dá merda
+// Se usar OpenMPI a mesma coisa !!!
+
+// Compilar código
+mpicc -g -G <fonte>.c -o <executavel>
+
+-g = Ativa debugação
+
+// Executar
+mpiexec -n <num_processos> <caminho_do_executavel>
+OU
+mpirun -n <num_processos> <caminho_do_executavel>
