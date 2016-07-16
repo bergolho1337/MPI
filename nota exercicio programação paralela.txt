@@ -1,0 +1,19 @@
+Introduction to parallel program peter pacheco
+
+Capítulo 1
+1.1, 1.2, 1.6, 1.7, 1.8												total 5
+
+Capítulo 2
+2.7, 2.8, 2.10, 2.16, 2.17, 2.19, 2.20, 2.21, 2.22					 	                total 9	
+
+Capítulo 3
+3.2, 3.4, 3.5, 3.6, 3.8, 3.9, 3.13, 3.16, 3.21, 3.22, 3.25, 3.26, 3.27, 3.28     	    			total 14
+--------------------------------------------------------------------------------------------------
+Programming assingments
+
+Capítulo 3
+3.1, 3.2, 3.5, 3.6																		total 4
+
+www.mkp.com/pacheco
+
+rodrigo.weber@ufjf.edu.br
