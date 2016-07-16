@@ -1,0 +1,10 @@
+#!/bin/bash
+#$ -pe mpich 4
+#$ -N myjob
+#$ -cwd
+#$ -j y
+#$ -S /bin/bash
+MYPROG="/home/verao06/Paralela/HelloWorld/helloworld"
+MPICH2_ROOT="/opt/mpich2/gnu"
+$MPICH2_ROOT/bin/mpiexec -n $NSLOTS $MYPROG
+exit 0

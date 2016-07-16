@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <mpi.h>
+
+const int n = 100;
+
+void geraVetor (double *x, int my_rank)
+{
+	if (my_rank == 0)
+	{
+		int i;
+		srand(my_rank);
+		for (i = 0; i < n; i++)
+			x[i] = i;
+	}
+	MPI_Bcast(x,n,MPI_DOUBLE,0,MPI_COMM_WORLD);
+}
+
+void geraMatriz (double *A, int my_rank)
+{
+	if (my_rank == 0)
+	{
+		int i, j;
+		double aux;
+		srand(my_rank);
+		for (i = 0; i < n*n; i++)
+			A[i] = i;
+		// Transposta matriz A
+		for (i = 0; i < n; i++)
+		{
+			for (j = i; j < n; j++)
+			{
+				if (i != j)
+				{
+					aux = A[i*n+j];
+					A[i*n+j] = A[j*n+i];
+					A[j*n+i] = aux;
+				}
+			}
+		}	
+	}
+	MPI_Bcast(A,n*n,MPI_DOUBLE,0,MPI_COMM_WORLD);
+}
+
+void copiaColuna (double *A, double *local_A, int local_n, int my_rank)
+{
+	int i, j, k, col, l;
+	col = my_rank*local_n;
+	k = l = 0;
+	for (i = col; i < col+local_n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			local_A[l*n+k] = A[j*n+i];
+			k++;
+		}
+		k = 0;
+		l++;
+	}
+}
+
+void multiplicaMatrizVetor (double *local_A, double *local_y, double *x, double local_n)
+{
+	int i, j, k;
+	k = 0;
+	for (i = 0; i < local_n; i++)
+	{
+		local_y[k] = 0;
+		for (j = 0; j < n; j++)
+			local_y[k] += local_A[i*n+j]*x[j];
+		k++;
+	}
+}
+
+int main ()
+{
+	int my_rank, comm_sz;
+	int local_n;
+	double *A, *x, *local_A, *local_y, *y;
+	double start, finish, local_elapsed, elapsed;
+	MPI_Comm comm = MPI_COMM_WORLD;
+	
+	MPI_Init(NULL,NULL);
+	MPI_Comm_rank(comm,&my_rank);
+	MPI_Comm_size(comm,&comm_sz);
+
+	// Variaveis que todo mundo possui ...
+	local_n = n/comm_sz;
+	A = (double*)malloc(sizeof(double)*n*n);
+	x = (double*)malloc(sizeof(double)*n);
+	local_A = (double*)malloc(sizeof(double)*n*local_n);
+	local_y = (double*)malloc(sizeof(double)*local_n);
+
+	// Cria a matriz e o vetor e os distribui para os processos
+	geraMatriz(A,my_rank);
+	geraVetor(x,my_rank);
+	
+	start = MPI_Wtime();
+	// Copia as colunas de cada processo
+	copiaColuna(A,local_A,local_n,my_rank);
+	
+	// Realiza a multiplicaçao matriz-vetor
+	multiplicaMatrizVetor(local_A,local_y,x,local_n);
+	
+	// Juntar as partes do vetor resultado
+	y = (double*)malloc(sizeof(double)*n);
+	MPI_Gather(local_y,local_n,MPI_DOUBLE,y,local_n,MPI_DOUBLE,0,comm);
+	finish = MPI_Wtime();
+	local_elapsed = finish-start;
+	MPI_Reduce(&local_elapsed,&elapsed,1,MPI_DOUBLE,MPI_MAX,0,comm);	
+
+	if (my_rank == 0)
+	{
+		int i, j;
+		//printf("\n--- Matriz A ---\n");
+		//for (i = 0; i < n; i++)
+		//{
+		//	for (j = 0; j < n; j++)
+		//		printf("%e ",A[i*n+j]);
+		//	printf("\n");
+		//}
+		//printf("\n--- Vetor x ---\n");
+		//for (i = 0; i < n; i++)
+		//	printf("%e\n",x[i]);
+		printf("\nTotal time elapsed: %e (ms)\n",elapsed);	
+		printf("\n--- Vetor y ---\n");
+		for (i = 0; i < n; i++)
+			printf("%e\n",y[i]);
+	}
+
+	free(A);
+	free(x);
+	free(y);
+	free(local_y);
+	free(local_A);
+	MPI_Finalize();
+}

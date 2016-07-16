@@ -1,0 +1,12 @@
+#!/bin/bash
+file="main"
+
+if [ -f "$file" ]; then
+  make clean
+  rm out
+fi
+
+make
+for (( proc = 1; proc <= 8; proc *= 2)) do
+    mpirun -n $proc main < in
+done
