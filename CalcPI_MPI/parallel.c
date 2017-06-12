@@ -1,8 +1,8 @@
 // Programming Assignment 3.2
-// *****************************************************
+// **********************************************************
 // Compile: 	make
-// Run: 		mpirun -n <number of processors> main
-// *****************************************************
+// Run: 		mpirun -n <number of processors> ./parallel
+// **********************************************************
 
 #include <stdio.h>
 #include <stdlib.h>

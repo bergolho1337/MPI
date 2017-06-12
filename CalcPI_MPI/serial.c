@@ -1,7 +1,7 @@
 // Programming Assignment 3.2
 // *****************************************************
 // Compile: 	mpicc -o main main.c
-// Run: 		mpirun -n <number of processors> main
+// Run: 		./serial
 // *****************************************************
 
 #include <stdio.h>
