@@ -1,5 +1,5 @@
 // Example program that shows how to build a MPI type struct of heterogenous types
-// And how to use it with communication functions
+// And how to use it with communication functions (Scatter)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,12 +8,12 @@
 // Number of elements of the global array
 const int n = 8;
 
+// The order of the variables matters on the block division
 // This structure has 1 integer and 3 double variables
-// The order which the parameters are set matters
 struct Point
-{ 
+{
     double x, y, z;         // 3d coordinates
-    int id;                 // Identifier
+    int id;                 // Identifier 
 }typedef Point;
 
 int main ()
@@ -40,7 +40,7 @@ int main ()
     blockcounts[0] = 3;
 
     // Second part: a block of 1 int 
-    // Need to first figure offset by getting size of MPI_DOUBLE
+    // Need to first figure offset of the first part by getting size of MPI_DOUBLE
     MPI_Type_extent(MPI_DOUBLE, &extent);
     offsets[1] = 3 * extent;
     types[1] = MPI_INT;
