@@ -167,8 +167,9 @@ int main (int argc, char *argv[])
 
     if (my_rank == 0)
     {
-        printf("Dot product = %.10lf\n",dot_prod);
-        printf("Time elapsed = %.10lf\n",total_elapsed);
+        //printf("Dot product = %.10lf\n",dot_prod);
+        //printf("Time elapsed = %.10lf\n",total_elapsed);
+        printf("%.10lf\n",total_elapsed);
     }
         
 
