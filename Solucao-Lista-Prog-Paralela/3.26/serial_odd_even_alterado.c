@@ -207,32 +207,33 @@ void Odd_even_sort_smart(
 
    for (phase = 0; phase < n; phase++) 
    {
-      if (checkOrder(a,n) == 0)
-      {
-            if (phase % 2 == 0) 
-            { /* Even phase */
-                  for (i = 1; i < n; i += 2)
-                  {      
-                        if (a[i-1] > a[i]) 
-                        {     
-                              temp = a[i];
-                              a[i] = a[i-1];
-                              a[i-1] = temp;
-                        }
-                  }
-            }
-            else 
-            { /* Odd phase */
-                  for (i = 1; i < n-1; i += 2)
-                  {
-                        if (a[i] > a[i+1]) 
-                        {
-                              temp = a[i];
-                              a[i] = a[i+1];
-                              a[i+1] = temp;
-                        }
-                  }
-            }
-      }   
+      if (phase % 2 == 0) 
+        { /* Even phase */
+                for (i = 1; i < n; i += 2)
+                {      
+                    if (a[i-1] > a[i]) 
+                    {     
+                            temp = a[i];
+                            a[i] = a[i-1];
+                            a[i-1] = temp;
+                    }
+                }
+        }
+        else 
+        { /* Odd phase */
+                for (i = 1; i < n-1; i += 2)
+                {
+                    if (a[i] > a[i+1]) 
+                    {
+                            temp = a[i];
+                            a[i] = a[i+1];
+                            a[i+1] = temp;
+                    }
+                }
+        } 
+        if (checkOrder(a,n) == 0)
+            break;
    }
+
+   
 }  /* Odd_even_sort_smart */

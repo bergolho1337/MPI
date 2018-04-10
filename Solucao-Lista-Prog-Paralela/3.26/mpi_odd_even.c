@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 
 	free(local_A);
 	if (my_rank == 0)
-		printf("Total time elapsed = %e (ms)\n",elapsed);
+		printf("%.10lf \n",elapsed);
 	MPI_Finalize();
 
    return 0;
@@ -380,8 +380,7 @@ void Merge_low(
       }
    }
 
-   my_keys = temp_keys;	
-   //memcpy(my_keys, temp_keys, local_n*sizeof(int));
+   memcpy(my_keys, temp_keys, local_n*sizeof(int));
 }  /* Merge_low */
 
 /*-------------------------------------------------------------------
@@ -410,8 +409,7 @@ void Merge_high(int local_A[], int temp_B[], int temp_C[],
       }
    }
 
-   local_A = temp_C;
-   //memcpy(local_A, temp_C, local_n*sizeof(int));
+   memcpy(local_A, temp_C, local_n*sizeof(int));
 }  /* Merge_high */
 
 

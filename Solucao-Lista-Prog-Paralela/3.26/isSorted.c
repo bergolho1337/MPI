@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int checkOrder (double *v, int n)
+int is_sorted (double *v, int n)
 {
 	int i, tick = 1;
 	for (i = 0; i < n-1; i++)
@@ -15,14 +15,15 @@ int checkOrder (double *v, int n)
 
 int main ()
 {
-	int *V, N, i;
+	double *V;
+	int N, i;
 	printf("Tamanho do vetor:\n");
 	scanf("%d",&N);
 	V = (double*)malloc(sizeof(double)*N);
 	printf("Lendo vetor:\n");
 	for (i = 0; i < N; i++)
 		scanf("%lf",&V[i]);
-	if (checkOrder(V,N) == 1)
+	if (is_sorted(V,N) == 1)
 		printf("[+] Ordenado!\n");
 	else
 		printf("[-] Desordenado!\n");

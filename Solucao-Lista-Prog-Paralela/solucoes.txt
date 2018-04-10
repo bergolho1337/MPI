@@ -1,0 +1,93 @@
+1.1)
+
+- Case 1) n is evenly divible by p
+
+    local_n = n / p
+    my_first_i = my_rank * local_n
+    my_last_i = my_first_i + local_n
+
+- Case 2) n is NOT evenly divible by p
+
+    local_n = n / p + r
+    if (my_rank < r)
+        my_first_i = (local_n + 1) * my_rank
+        my_last_i = my_first_i + local_n + 1
+    else
+        my_first_i = (local_n * my_rank) + r 
+        my_last_i = my_first_i + local_n
+
+---------------------------------------------------------------------------------------------------
+2.17)
+
+- Uso da memoria cache (mais registradores por tarefas, melhora os cache-hits)
+- Uso de algoritmos melhores
+- Distribuicao espacial. Por exemplo, algoritmos de busca em paralelo ficam mais rapidos pois a 
+distribuicao do espaco de busca total acaba diminuindo o tempo total de achar a chave buscada.
+- Acesso individual a elementos deixa os codigos bem mais rapidos (Exemplo: codigos em GPU)
+
+From vast amount of places: cache usage (what fit into registers, main memory or mass storage, 
+where very often more processing units gives overall more registers per subtask), memory hit patterns,
+simply better (or a slight different) algorithm, flaws in the serial code.
+For example random process that searches space for result is now divided into 1024 searchers covering
+more space at once so finding solution faster is more probable.
+There are byproducts (if you swap elements like in bubble sort and switch into gpu it swaps all pairs
+at once, while serial only up to point).
+
+---------------------------------------------------------------------------------------------------
+2.19) Folha
+---------------------------------------------------------------------------------------------------
+2.20) Folha
+---------------------------------------------------------------------------------------------------
+3.2) Pasta
+---------------------------------------------------------------------------------------------------
+3.9) Pasta
+---------------------------------------------------------------------------------------------------
+3.13) O codigo da questao 3.9 ja foi implementado usando o Scatterv()
+---------------------------------------------------------------------------------------------------
+3.21) O aluno deve rodar o codigo do "mpi_mat_vect_time.c" e medir os tempos de execucao com
+diferentes tamanhos de matriz e numeros de processos. Em seguida montar uma tabela de speedups e
+avaliar os resultados, lembrando de dizer que o programa NAO eh escalavel.
+---------------------------------------------------------------------------------------------------
+3.22) O aluno deve rodar o codigo do "mpi_trap_reduce.c" e medir os tempos de execucao com 
+diferentes numeros de trapezios para a integracao e numeros de processos. Em seguida montar uma
+tabela de speedup e avaliar os resultados, lembrando de dizer que o programa eh escalavel.
+---------------------------------------------------------------------------------------------------
+3.25) O speedup “ideal” é p pois se dividíssemos o tempo serial igualmente para cada processador, 
+teríamos um speedup de p vezes mais rápido, ou seja este seria uma espécia de speedup máximo na 
+teoria. No entanto, na prática, é possível sim, ter um speedup maior do que p, chamado de 
+Speedup Super-Linear. Isso acontece principalmente em computadores modernos que possuem 
+implementações de cache, fazendo com que o speedup aumente mais do que p.
+
+a) Evitando cache-misses. Ou seja, o vetor parcial dos processos foram alocados totalmente na memoria
+cache, dessa forma o acesso a leitura fica bem mais rapido, tornando possivel um speedup maior que p.
+
+b) O exemplo da soma vetorial irá atingir um superlinear speedup se tivéssemos poucos ou nenhum cache 
+miss, em relação a execução serial. No caso de um único processador executando a tarefa, pode 
+acontecer que ele não consiga “cachear” todo o vetor em sua memória cache, tendo que acessar mais 
+de uma vez a memória. Com vários processadores, cada um seria responsável pela soma de uma parte do 
+vetor, sendo possível cachear totalmente ou parcialmente o seu vetor de soma na cache. Sem superar 
+essas limitações de recurso não é possível obter um speedup superlinear.
+---------------------------------------------------------------------------------------------------
+3.26)
+
+a) Pasta
+b) Pasta
+c) No pior dos casos, se a lista já estivesse ordenada e a checagem não fosse feita o programa 
+executaria as n fases. Com a checagem, o programa executaria apenas 1 fase (executaria nenhuma se a 
+checagem fosse feita no início). Dificilmente uma lista aleatória já iria vir ordenada e a fração de 
+melhoria com a adição de checagem seria de apenas uma situação dentro de n! outras.
+---------------------------------------------------------------------------------------------------
+3.27) Pasta
+O aluno deve rodar o codigo do "mpi_odd_even.c" e medir os tempos de execucao com 
+diferentes tamanhos de vetores e numeros de processos. Em seguida montar uma
+tabela de speedup e avaliar os resultados, lembrando de dizer que o programa NAO eh escalavel. 
+
+Não é escalável pois a eficiência não se manteve constante. O programa mantém praticamente constante 
+a eficiência enquanto aumenta o tamanho do problema e mantém-se o número de processadores, logo pode 
+ser considerado como fracamente escalável. Não é fortemente escalável pois a eficiência não 
+permanece constante com o aumento de processadores.
+---------------------------------------------------------------------------------------------------
+3.28) Pasta
+---------------------------------------------------------------------------------------------------
+P-3.2) Pasta
+---------------------------------------------------------------------------------------------------

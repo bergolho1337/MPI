@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 
 	free(local_A);
 	if (my_rank == 0)
-		printf("Total time elapsed = %e (ms)\n",elapsed);
+		printf("%.10lf \n",elapsed);
 	MPI_Finalize();
 
    return 0;
@@ -151,18 +151,26 @@ void Usage(char* program) {
 void Get_args(int argc, char* argv[], int* global_n_p, int* local_n_p, 
          char* gi_p, int my_rank, int p, MPI_Comm comm) {
 
-   if (my_rank == 0) {
-      if (argc != 3) {
+   if (my_rank == 0) 
+   {
+      if (argc != 3) 
+      {
          Usage(argv[0]);
          *global_n_p = -1;  /* Bad args, quit */
-      } else {
+      } 
+      else 
+      {
          *gi_p = argv[1][0];
-         if (*gi_p != 'g' && *gi_p != 'i') {
+         if (*gi_p != 'g' && *gi_p != 'i') 
+         {
             Usage(argv[0]);
             *global_n_p = -1;  /* Bad args, quit */
-         } else {
+         } 
+         else 
+         {
             *global_n_p = atoi(argv[2]);
-            if (*global_n_p % p != 0) {
+            if (*global_n_p % p != 0) 
+            {
                Usage(argv[0]);
                *global_n_p = -1;
             }
@@ -372,8 +380,8 @@ void Merge_low(
       }
    }
 
-   //my_keys = temp_keys;	
-   memcpy(my_keys, temp_keys, local_n*sizeof(int));
+   my_keys = temp_keys;	
+   //memcpy(my_keys, temp_keys, local_n*sizeof(int));
 }  /* Merge_low */
 
 /*-------------------------------------------------------------------
@@ -402,8 +410,8 @@ void Merge_high(int local_A[], int temp_B[], int temp_C[],
       }
    }
 
-   //local_A = temp_C;
-   memcpy(local_A, temp_C, local_n*sizeof(int));
+   local_A = temp_C;
+   //memcpy(local_A, temp_C, local_n*sizeof(int));
 }  /* Merge_high */
 
 

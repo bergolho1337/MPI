@@ -15,6 +15,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include "timer.h"
 
 /* Keys in the random list in the range 0 <= key < RMAX */
 const int RMAX = 100;
@@ -25,30 +26,37 @@ void Generate_list(int a[], int n);
 void Print_list(int a[], int n, char* title);
 void Read_list(int a[], int n);
 void Odd_even_sort(int a[], int n);
+void Odd_even_sort_smart(int a[], int n);
 
 /*-----------------------------------------------------------------*/
 int main(int argc, char* argv[]) {
    int  n;
    char g_i;
    int* a;
+   double start, finish, elapsed;
 
    Get_args(argc, argv, &n, &g_i);
    a = (int*) malloc(n*sizeof(int));
    if (g_i == 'g') {
       Generate_list(a, n);
-      Print_list(a, n, "Before sort");
+      //Print_list(a, n, "Before sort");
    } else {
       Read_list(a, n);
    }
 
-   Odd_even_sort(a, n);
+   //Odd_even_sort(a, n);
+   GET_TIME(start);
+   //Odd_even_sort(a, n);
+   Odd_even_sort_smart(a, n);
+   GET_TIME(finish);
+   elapsed = finish - start;
 
-   Print_list(a, n, "After sort");
+   //Print_list(a, n, "After sort");
+   printf("Time elapsed = %.10lf s\n",elapsed);
    
    free(a);
    return 0;
 }  /* main */
-
 
 /*-----------------------------------------------------------------
  * Function:  Usage
@@ -140,19 +148,30 @@ void Odd_even_sort(
    int phase, i, temp;
 
    for (phase = 0; phase < n; phase++) 
-      if (phase % 2 == 0) { /* Even phase */
-         for (i = 1; i < n; i += 2) 
-            if (a[i-1] > a[i]) {
-               temp = a[i];
-               a[i] = a[i-1];
-               a[i-1] = temp;
-            }
-      } else { /* Odd phase */
-         for (i = 1; i < n-1; i += 2)
-            if (a[i] > a[i+1]) {
-               temp = a[i];
-               a[i] = a[i+1];
-               a[i+1] = temp;
+   {
+	if (phase % 2 == 0) 
+      { /* Even phase */
+            for (i = 1; i < n; i += 2)
+            {      
+                  if (a[i-1] > a[i]) 
+                  {     
+                        temp = a[i];
+                        a[i] = a[i-1];
+                        a[i-1] = temp;
+                  }
             }
       }
+      else 
+      { /* Odd phase */
+            for (i = 1; i < n-1; i += 2)
+            {
+                  if (a[i] > a[i+1]) 
+                  {
+                        temp = a[i];
+                        a[i] = a[i+1];
+                        a[i+1] = temp;
+                  }
+            }
+      }
+   }
 }  /* Odd_even_sort */
