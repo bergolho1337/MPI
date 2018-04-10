@@ -1,0 +1,21 @@
+#!/bin/bash
+# ===================================================================================
+# Exemplo de arquivo de job
+# ===================================================================================
+# >>>> Alterar estas variaveis <<<<<
+MYPROG="/home/berg/Paralela/MPI/Odd-Even-Sort/mpi_odd_even"    
+ARGS="g 134217728"
+# ===================================================================================
+
+#$ -pe mpich 2                      # Definir o numero de processos
+#$ -N myjob                         # Definir o nome do arquivo de saida do job
+#$ -cwd                             # Executar o job do diretorio atual
+#$ -j y                             # Combina a saida de erro stderr com a stdout
+#$ -S /bin/bash                     # Especifica o tipo de shell
+#$ -sync y			    # Sincronizacao entre jobs (Speedup)
+#$ -q "all.q@compute-0-9"	    # Conjunto de maquinas que vou submeter o job
+
+MPICH2_ROOT="/opt/mpich2/gnu"
+export LD_LIBRARY_PATH=/opt/mpich2/gnu/lib:$LD_LIBRARY_PATH
+$MPICH2_ROOT/bin/mpiexec -n $NSLOTS $MYPROG $ARGS
+exit 0
